@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHRO7R – Órarend (XML → HTML)</title>
+    <style>
+        :root { color-scheme: light dark; }
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+        h1 { margin: 0 0 12px; font-size: 1.6rem; }
+        .sub { margin: 0 0 20px; color: #666; }
+        table { width: 100%; border-collapse: collapse; }
+        thead th { text-align: left; background: #f3f3f3; }
+        th, td { border: 1px solid #ccc; padding: 8px 10px; }
+        tbody tr:nth-child(odd) { background: #fafafa; }
+        .chip { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: .85rem; border: 1px solid #bbb; background: #fff; }
+        @media (prefers-color-scheme: dark) {
+            thead th { background: #222; }
+            th, td { border-color: #444; }
+            tbody tr:nth-child(odd) { background: #111; }
+            .chip { background: #000; border-color: #333; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Órarend – 2025 ősz</h1>
+    <p class="sub">Forrás: <code>PHRO7R_0917/PHRO7R_orarend.xml</code> – statikus HTML konverzió</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nap</th>
+                <th>Tárgy</th>
+                <th>Típus</th>
+                <th>Kezdés</th>
+                <th>Vége</th>
+                <th>Helyszín</th>
+                <th>Oktató</th>
+                <th>Szak</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>hetfo</td>
+                <td>Elektrotechnika-elektronika</td>
+                <td><span class="chip">eloadas</span></td>
+                <td>08:00</td>
+                <td>09:30</td>
+                <td>III A4 fsz.</td>
+                <td>Szabó Norbert</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>hetfo</td>
+                <td>WEB technológiák 1.</td>
+                <td><span class="chip">eloadas</span></td>
+                <td>10:00</td>
+                <td>11:30</td>
+                <td>V A1 magasfsz3-4</td>
+                <td>Agárdi Anita</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>hetfo</td>
+                <td>Műszaki szaknyelv 1.</td>
+                <td><span class="chip">eloadas</span></td>
+                <td>12:00</td>
+                <td>13:30</td>
+                <td>A1/314</td>
+                <td>Lévai-Asztalos Erzsébet</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>hetfo</td>
+                <td>WEB technológiák 1.</td>
+                <td><span class="chip">gyakorlat</span></td>
+                <td>14:00</td>
+                <td>15:30</td>
+                <td>In/101</td>
+                <td>Agárdi Anita</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>hetfo</td>
+                <td>Mobil programozás alapok</td>
+                <td><span class="chip">eloadas</span></td>
+                <td>16:00</td>
+                <td>17:30</td>
+                <td>In/101</td>
+                <td>Agárdi Anita</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>hetfo</td>
+                <td>Mobil programozás alapok</td>
+                <td><span class="chip">gyakorlat</span></td>
+                <td>18:00</td>
+                <td>19:30</td>
+                <td>In/101</td>
+                <td>Agárdi Anita</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>kedd</td>
+                <td>Windows rendszergazda</td>
+                <td><span class="chip">eloadas</span></td>
+                <td>8:00</td>
+                <td>9:30</td>
+                <td>In/103</td>
+                <td>Dr. Wagner György</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>kedd</td>
+                <td>Mesterséges intelligencia alapok</td>
+                <td><span class="chip">eloadas</span></td>
+                <td>10:00</td>
+                <td>11:30</td>
+                <td>XXXII A1 magasfsz</td>
+                <td>Kunné Dr. Tamás Judit</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>kedd</td>
+                <td>Mesterséges intelligencia alapok</td>
+                <td><span class="chip">gyakorlat</span></td>
+                <td>12:00</td>
+                <td>13:30</td>
+                <td>XXXII A1 magasfsz</td>
+                <td>Fazekas Levente</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>kedd</td>
+                <td>Windows rendszergazda</td>
+                <td><span class="chip">gyakorlat</span></td>
+                <td>16:00</td>
+                <td>17:30</td>
+                <td>In/103</td>
+                <td>Dr. Wagner György</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>szerda</td>
+                <td>Webes adatkezelő környezetek</td>
+                <td><span class="chip">eloadas</span></td>
+                <td>8:00</td>
+                <td>9:30</td>
+                <td>In/102</td>
+                <td>Dr. Kovács László</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>szerda</td>
+                <td>Webes adatkezelő környezetek</td>
+                <td><span class="chip">gyakorlat</span></td>
+                <td>10:00</td>
+                <td>11:30</td>
+                <td>In/101</td>
+                <td>Dr. Bednarik László</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+            <tr>
+                <td>szerda</td>
+                <td>Elektrotechnika-elektronika</td>
+                <td><span class="chip">gyakorlat</span></td>
+                <td>12:00</td>
+                <td>13:30</td>
+                <td>In/101</td>
+                <td>Szabó Norbert</td>
+                <td>Mérnökinformatika</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+
