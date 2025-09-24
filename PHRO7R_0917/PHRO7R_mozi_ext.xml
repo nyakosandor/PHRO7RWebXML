@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mozi SYSTEM "../PHRO7R_mozi.dtd">
 <mozi>
     <film id="txn_nxm_2jb" mufaj="horror">
         <rendezo id="nzk_4xm_2jb" nev="alex" />
