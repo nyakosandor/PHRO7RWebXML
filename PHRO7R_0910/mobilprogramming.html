@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobil programozás alapok - Kurzus tematika</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-card {
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: scale(1.05);
+        }
+
+        .back-link img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .content-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .content-section ul {
+            line-height: 2;
+            color: #555;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        .content-section img {
+            max-width: 600px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: block;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .schedule-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .schedule-table tr:hover {
+            background-color: #f8f9ff;
+        }
+
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .week-number {
+            font-weight: bold;
+            color: #667eea;
+            width: 80px;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .footer p {
+            margin: 8px 0;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .footer .name {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .footer .neptun {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .schedule-table {
+                font-size: 0.9em;
+            }
+
+            .schedule-table th,
+            .schedule-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-card">
+            <a href="index.html" class="back-link">
+                <img src="https://geik.uni-miskolc.hu/intezetek/FEI/content/160/160_5.png" alt="Vissza a kezdőlapra" title="Kattints a képre a visszalépéshez">
+            </a>
+            <h1><i class="fas fa-mobile-alt"></i> Mobil programozás alapok</h1>
+        </div>
+        
+        <div class="content-section">
+            <h2><i class="fas fa-list"></i> Kurzus tematika</h2>
+            <ul>
+                <li><strong>ReactJS alapok:</strong> Komponens alapú architektúra, JSX szintaxis</li>
+                <li><strong>React Native:</strong> Mobilalkalmazás fejlesztés natív módon</li>
+                <li><strong>Props:</strong> Adatok továbbítása komponensek között</li>
+                <li><strong>State:</strong> Állapotkezelés és dinamikus adatok</li>
+                <li><strong>Style:</strong> Stílusok alkalmazása mobilalkalmazásokban</li>
+                <li><strong>Layout kialakítás:</strong> Flexbox és reszponzív design</li>
+                <li><strong>Form kezelés:</strong> Bemeneti mezők és adatküldés</li>
+                <li><strong>Scroll View:</strong> Görgethető tartalmak megvalósítása</li>
+                <li><strong>List View:</strong> Listák és gyűjtemények megjelenítése</li>
+                <li><strong>Komplex feladat:</strong> Teljes funkcionalitású alkalmazás fejlesztése</li>
+                <li><strong>Haladó témák:</strong> Optimalizálás és best practices</li>
+            </ul>
+
+            <h2 style="margin-top: 30px;"><i class="fas fa-calendar-alt"></i> Ütemterv</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">Hét</th>
+                        <th>Előadás</th>
+                        <th>Gyakorlat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="week-number">1.</td>
+                        <td>ReactJS alapok áttekintése</td>
+                        <td>ReactJS alapok áttekintése</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">2.</td>
+                        <td>ReactJS alapok áttekintése</td>
+                        <td>ReactJS alapok áttekintése</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">3.</td>
+                        <td>React Native alapok</td>
+                        <td>React Native alapok</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">4.</td>
+                        <td>Props</td>
+                        <td>Props</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">5.</td>
+                        <td>State</td>
+                        <td>State</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">6.</td>
+                        <td>Style</td>
+                        <td>Style</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">7.</td>
+                        <td>Layout kialakítás</td>
+                        <td>Layout kialakítás</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">8.</td>
+                        <td>Form</td>
+                        <td>Form</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">9.</td>
+                        <td>Scroll View</td>
+                        <td>Scroll View</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">10.</td>
+                        <td>List View</td>
+                        <td>List View</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">11.</td>
+                        <td>Komplex feladat elkészítése</td>
+                        <td>Komplex feladat elkészítése</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">12.</td>
+                        <td>Komplex feladat elkészítése</td>
+                        <td>Komplex feladat elkészítése</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">13.</td>
+                        <td>Haladó példák bemutatása</td>
+                        <td>Féléves feladat bemutatása</td>
+                    </tr>
+                    <tr>
+                        <td class="week-number">14.</td>
+                        <td>Haladó példák bemutatása</td>
+                        <td>Féléves feladat bemutatása</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <img src="images/react-native.png" alt="React Native">
+        </div>
+        
+        <div class="footer">
+            <p class="name">Hallgató neve: Nyakó Sándor</p>
+            <p>Neptunkód: <span class="neptun">PHR07R</span></p>
+            <p>© 2025</p>
+        </div>
+    </div>
+</body>
+</html>
