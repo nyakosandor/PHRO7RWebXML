@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kurzusfelvetel SYSTEM "PHRO7R_kurzusfelvetel.dtd">
+<kurzusfelvetel>
+    <hallgato>
+        <nev>Nyakó Sándor</nev>
+        <neptun>PHRO7R</neptun>
+    </hallgato>
+    <felev>
+        <ev>2025</ev>
+        <szemeszter>ősz</szemeszter>
+    </felev>
+    <targyak>
+        <targy id="t1" jovahagyas="nem">
+            <nev>Testnevelés 2.</nev>
+            <kod>ETTESME2</kod>
+            <kredit>0</kredit>
+            <tipus>kollokvium</tipus>
+            <kovetelmeny>Aláírás megszerzése</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>hetfo</nap>
+                <tol>00:00</tol>
+                <ig>00:00</ig>
+            </idopont>
+        </targy>
+        <targy id="t2" jovahagyas="nem">
+            <nev>Számítástechnika szigorlat</nev>
+            <kod>GEIAL300-B2</kod>
+            <kredit>0</kredit>
+            <tipus>szigorlat</tipus>
+            <kovetelmeny>Szigorlat</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>vizsgaidoszak</nap>
+                <tol>00:00</tol>
+                <ig>00:00</ig>
+            </idopont>
+        </targy>
+        <targy id="t3" jovahagyas="nem">
+            <nev>Mesterséges intelligencia alapok</nev>
+            <kod>GEIAK130-B2</kod>
+            <kredit>5</kredit>
+            <tipus>kollokvium</tipus>
+            <kovetelmeny>Kollokvium</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>kedd</nap>
+                <tol>10:00</tol>
+                <ig>11:30</ig>
+            </idopont>
+            <oktato>Kunné Dr. Tamás Judit</oktato>
+        </targy>
+        <targy id="t4" jovahagyas="nem">
+            <nev>Windows rendszergazda</nev>
+            <kod>GEIAL30A-B2</kod>
+            <kredit>5</kredit>
+            <tipus>kollokvium</tipus>
+            <kovetelmeny>Kollokvium</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>kedd</nap>
+                <tol>08:00</tol>
+                <ig>09:30</ig>
+            </idopont>
+            <oktato>Dr. Wagner György</oktato>
+        </targy>
+        <targy id="t5" jovahagyas="nem">
+            <nev>Web technológiák 1.</nev>
+            <kod>GEIAL331-B2</kod>
+            <kredit>5</kredit>
+            <tipus>kollokvium</tipus>
+            <kovetelmeny>Kollokvium</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>hetfo</nap>
+                <tol>10:00</tol>
+                <ig>11:30</ig>
+            </idopont>
+            <oktato>Agárdi Anita</oktato>
+        </targy>
+        <targy id="t6" jovahagyas="nem">
+            <nev>Mobil programozási alapok</nev>
+            <kod>GEIAL335-B2</kod>
+            <kredit>5</kredit>
+            <tipus>kollokvium</tipus>
+            <kovetelmeny>Kollokvium</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>hetfo</nap>
+                <tol>16:00</tol>
+                <ig>17:30</ig>
+            </idopont>
+            <oktato>Agárdi Anita</oktato>
+        </targy>
+        <targy id="t7" jovahagyas="nem">
+            <nev>Angol műszaki szaknyelv 1.</nev>
+            <kod>MEIOKMUSZAN1</kod>
+            <kredit>0</kredit>
+            <tipus>aláírás</tipus>
+            <kovetelmeny>Aláírás megszerzése</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>hetfo</nap>
+                <tol>12:00</tol>
+                <ig>13:30</ig>
+            </idopont>
+            <oktato>Lévai-Asztalos Erzsébet</oktato>
+        </targy>
+        <targy id="t8" jovahagyas="nem">
+            <nev>Elektrotechnika-elektronika</nev>
+            <kod>GEVEE050-B2</kod>
+            <kredit>5</kredit>
+            <tipus>kollokvium</tipus>
+            <kovetelmeny>Kollokvium</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>hetfo</nap>
+                <tol>08:00</tol>
+                <ig>09:30</ig>
+            </idopont>
+            <oktato>Szabó Norbert</oktato>
+        </targy>
+        <targy id="t9" jovahagyas="nem">
+            <nev>Webes adatkezelő környezetek</nev>
+            <kod>GEIAL32K-B2</kod>
+            <kredit>5</kredit>
+            <tipus>kollokvium</tipus>
+            <kovetelmeny>Kollokvium</kovetelmeny>
+            <allapot>Leadás</allapot>
+            <idopont>
+                <nap>szerda</nap>
+                <tol>08:00</tol>
+                <ig>11:30</ig>
+            </idopont>
+            <oktato>Dr. Bednarik László</oktato>
+        </targy>
+    </targyak>
+</kurzusfelvetel>
+
+

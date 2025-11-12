@@ -1,0 +1,29 @@
+<!ELEMENT kurzusfelvetel (hallgato, felev, targyak)>
+<!ELEMENT hallgato (nev, neptun)>
+<!ELEMENT nev (#PCDATA)>
+<!ELEMENT neptun (#PCDATA)>
+
+<!ELEMENT felev (ev, szemeszter)>
+<!ELEMENT ev (#PCDATA)>
+<!ELEMENT szemeszter (#PCDATA)>
+
+<!ELEMENT targyak (targy*)>
+
+<!ELEMENT targy (nev, kod, kredit, tipus, kovetelmeny, allapot, idopont+, (oktato|oraado)?)>
+<!ATTLIST targy
+        id ID #IMPLIED
+        jovahagyas (igen|nem) "nem">
+
+<!ELEMENT kod (#PCDATA)>
+<!ELEMENT kredit (#PCDATA)>
+<!ELEMENT tipus (kollokvium|szigorlat|aláírás)>
+<!ELEMENT kovetelmeny (Kollokvium|Szigorlat|Aláírás\ megszerzése)>
+<!ELEMENT allapot (#PCDATA)>
+
+<!ELEMENT idopont (nap, tol, ig)>
+<!ELEMENT nap (#PCDATA)>
+<!ELEMENT tol (#PCDATA)>
+<!ELEMENT ig (#PCDATA)>
+
+<!ELEMENT oktato (#PCDATA)>
+<!ELEMENT oraado (#PCDATA)>

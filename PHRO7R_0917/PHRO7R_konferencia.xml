@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<konferencia>
+    <cim>Informatikus szakmai nap</cim>
+    <datum>2025-10-01</datum>
+    <helyszin>
+        <nev>Miskolci Egyetem, Informatikai epület 103-as előadó</nev>
+        <lakcim>3515 Miskolc-Egyetemváros</lakcim>
+        <adoszam>19253055-2-05</adoszam>
+    </helyszin>
+    <eloado>
+        <nev>Weboldalnet.hu</nev>
+        <lakcim>Miskolc, Zsolcai kapu 34, 3527</lakcim>
+        <adoszam>28824640205</adoszam>
+    </eloado>
+    <eloado>
+        <nev>Epam</nev>
+        <lakcim>Debrecen, Tüzér u. 4, 4028</lakcim>
+        <adoszam>12548051244</adoszam>
+    </eloado>
+    <eloado>
+        <nev>Flexinform</nev>
+        <lakcim>3530 Miskolc, Városház tér 22. emelet 1.</lakcim>
+        <adoszam>24753702205</adoszam>
+    </eloado>
+    <hallgatok>
+        <hallgato>
+            <nev>Nyakó Sándor</nev>
+            <lakcim>E/4 kollégium, 3515 Miskolc-Egyetemváros</lakcim>
+        </hallgato>
+        <hallgato>
+            <nev>Réthy Tamás</nev>
+            <lakcim>E/4 kollégium, 3515 Miskolc-Egyetemváros</lakcim>
+        </hallgato>
+        <hallgato>
+            <nev>Egyed Martin</nev>
+            <lakcim>E/4 kollégium, 3515 Miskolc-Egyetemváros</lakcim>
+        </hallgato>
+        <hallgato>
+            <nev>Sztancsik Máté</nev>
+            <lakcim>E/4 kollégium, 3515 Miskolc-Egyetemváros</lakcim>
+        </hallgato>
+        <hallgato>
+            <nev>Orosz Szilárd</nev>
+            <lakcim>E/4 kollégium, 3515 Miskolc-Egyetemváros</lakcim>
+        </hallgato>
+    </hallgatok>
+</konferencia>

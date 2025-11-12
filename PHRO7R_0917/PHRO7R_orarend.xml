@@ -1,76 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE PHRO7R_orarend SYSTEM "PHRO7R_orarend.dtd">
 <PHRO7R_orarend>
     <ora id="ora_1" tipus="eloadas">
         <targy>Elektrotechnika-elektronika</targy>
         <idopont>
-            <nap>hetfo</nap>
+            <nap>Hétfő</nap>
             <tol>08:00</tol>
             <ig>09:30</ig>
         </idopont>
         <helyszin>III A4 fsz.</helyszin>
         <oktato>Szabó Norbert</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_2" tipus="eloadas">
         <targy>WEB technológiák 1.</targy>
         <idopont>
-            <nap>hetfo</nap>
+            <nap>Hétfő</nap>
             <tol>10:00</tol>
             <ig>11:30</ig>
         </idopont>
         <helyszin>V A1 magasfsz3-4</helyszin>
         <oktato>Agárdi Anita</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_3" tipus="eloadas">
         <targy>Műszaki szaknyelv 1.</targy>
         <idopont>
-            <nap>hetfo</nap>
+            <nap>Hétfő</nap>
             <tol>12:00</tol>
             <ig>13:30</ig>
         </idopont>
         <helyszin>A1/314</helyszin>
         <oktato>Lévai-Asztalos Erzsébet</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_4" tipus="gyakorlat">
         <targy>WEB technológiák 1.</targy>
         <idopont>
-            <nap>hetfo</nap>
+            <nap>Hétfő</nap>
             <tol>14:00</tol>
             <ig>15:30</ig>
         </idopont>
         <helyszin>In/101</helyszin>
         <oktato>Agárdi Anita</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_5" tipus="eloadas">
         <targy>Mobil programozás alapok</targy>
         <idopont>
-            <nap>hetfo</nap>
+            <nap>Hétfő</nap>
             <tol>16:00</tol>
             <ig>17:30</ig>
         </idopont>
         <helyszin>In/101</helyszin>
         <oktato>Agárdi Anita</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_6" tipus="gyakorlat">
         <targy>Mobil programozás alapok</targy>
         <idopont>
-            <nap>hetfo</nap>
+            <nap>Hétfő</nap>
             <tol>18:00</tol>
             <ig>19:30</ig>
         </idopont>
         <helyszin>In/101</helyszin>
         <oktato>Agárdi Anita</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_7" tipus="eloadas">
         <targy>Windows rendszergazda</targy>
         <idopont>
-            <nap>kedd</nap>
+            <nap>Kedd</nap>
             <tol>8:00</tol>
             <ig>9:30</ig>
         </idopont>
@@ -81,68 +80,68 @@
     <ora id="ora_8" tipus="eloadas">
         <targy>Mesterséges intelligencia alapok</targy>
         <idopont>
-            <nap>kedd</nap>
+            <nap>Kedd</nap>
             <tol>10:00</tol>
             <ig>11:30</ig>
         </idopont>
         <helyszin>XXXII A1 magasfsz</helyszin>
         <oktato>Kunné Dr. Tamás Judit</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_9" tipus="gyakorlat">
         <targy>Mesterséges intelligencia alapok</targy>
         <idopont>
-            <nap>kedd</nap>
+            <nap>Kedd</nap>
             <tol>12:00</tol>
             <ig>13:30</ig>
         </idopont>
         <helyszin>XXXII A1 magasfsz</helyszin>
         <oktato>Fazekas Levente</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_10" tipus="gyakorlat">
         <targy>Windows rendszergazda</targy>
         <idopont>
-            <nap>kedd</nap>
+            <nap>Kedd</nap>
             <tol>16:00</tol>
             <ig>17:30</ig>
         </idopont>
         <helyszin>In/103</helyszin>
         <oktato>Dr. Wagner György</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_11" tipus="eloadas">
         <targy>Webes adatkezelő környezetek</targy>
         <idopont>
-            <nap>szerda</nap>
+            <nap>Szerda</nap>
             <tol>8:00</tol>
             <ig>9:30</ig>
         </idopont>
         <helyszin>In/102</helyszin>
         <oktato>Dr. Kovács László</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_12" tipus="gyakorlat">
         <targy>Webes adatkezelő környezetek</targy>
         <idopont>
-            <nap>szerda</nap>
+            <nap>Szerda</nap>
             <tol>10:00</tol>
             <ig>11:30</ig>
         </idopont>
         <helyszin>In/101</helyszin>
         <oktato>Dr. Bednarik László</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
     <ora id="ora_13" tipus="gyakorlat">
         <targy>Elektrotechnika-elektronika</targy>
         <idopont>
-            <nap>szerda</nap>
+            <nap>Szerda</nap>
             <tol>12:00</tol>
             <ig>13:30</ig>
         </idopont>
         <helyszin>In/101</helyszin>
         <oktato>Szabó Norbert</oktato>
-        <szak>Mérnökinformatika</szak>
+        <szak>Mérnökinformatikus</szak>
     </ora>
 </PHRO7R_orarend>
 
