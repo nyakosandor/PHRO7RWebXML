@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="tanevTipus">
+        <xs:restriction base="xs:gYear"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="egyetemTipus">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z0-9]{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="idTipus">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="t[1-9][0-9]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="igenNemTipus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="igen"/>
+            <xs:enumeration value="nem"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="stringTipus">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="szemeszterTipus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ősz"/>
+            <xs:enumeration value="tavasz"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="kreditTipus">
+        <xs:restriction base="xs:nonNegativeInteger"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="napTipus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="hetfo"/>
+            <xs:enumeration value="kedd"/>
+            <xs:enumeration value="szerda"/>
+            <xs:enumeration value="csutortok"/>
+            <xs:enumeration value="pentek"/>
+            <xs:enumeration value="vizsgaidoszak"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="idoTipus">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-1][0-9]|2[0-3]):[0-5][0-9]"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="hallgato">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nev" type="stringTipus"/>
+                <xs:element name="neptun" type="egyetemTipus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="targyTipus">
+        <xs:sequence>
+            <xs:element name="nev" type="stringTipus"/>
+            <xs:element name="kod" type="stringTipus"/>
+            <xs:element name="kredit" type="kreditTipus"/>
+            <xs:element name="tipus" type="stringTipus"/>
+            <xs:element name="kovetelmeny" type="stringTipus"/>
+            <xs:element name="allapot" type="stringTipus"/>
+            <xs:element name="idopont">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="nap" type="napTipus"/>
+                        <xs:element name="tol" type="idoTipus"/>
+                        <xs:element name="ig" type="idoTipus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="oktato" type="stringTipus" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="idTipus" use="required"/>
+        <xs:attribute name="jovahagyas" type="igenNemTipus" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="targyak">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="targy" type="targyTipus" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="kurzusfelvetel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="hallgato"/>
+                
+                <xs:element name="felev">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ev" type="tanevTipus"/>
+                            <xs:element name="szemeszter" type="szemeszterTipus"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                
+                <xs:element ref="targyak"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
