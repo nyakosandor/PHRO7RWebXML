@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PHRO7R_Vendeglatas
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="PHRO7R_XMLSchemaGPT.xsd">
+    <Etterem EKod="E001">
+        <Nev>Aranykanal Etterem</Nev>
+        <Csillag>4</Csillag>
+        <Cim>
+            <Varos>Budapest</Varos>
+            <Utca>Fo utca</Utca>
+            <Hazszam>10</Hazszam>
+        </Cim>
+
+        <Foszakacs FKod="F001">
+            <Nev>Kiss Jozsef</Nev>
+            <Eletkor>45</Eletkor>
+            <!-- Vegzettseg többszörös értékű attribútum -->
+            <Vegzettseg>Szakacs mester</Vegzettseg>
+            <Vegzettseg>Vendeglato technikus</Vegzettseg>
+        </Foszakacs>
+
+        <Szakacsok>
+            <Szakacs SzKod="SZ001">
+                <Nev>Nagy Anna</Nev>
+                <Reszleg>Melegkonyha</Reszleg>
+                <Vegzettseg>Szakacs</Vegzettseg>
+            </Szakacs>
+            <Szakacs SzKod="SZ002">
+                <Nev>Toth Peter</Nev>
+                <Reszleg>Hidegkonyha</Reszleg>
+                <Vegzettseg>Cukrasz</Vegzettseg>
+            </Szakacs>
+        </Szakacsok>
+
+        <Gyakornokok>
+            <Gyakornok GyKod="GY001">
+                <Nev>Kovacs Lilla</Nev>
+                <Gyakorlat>Nyari szakmai gyakorlat</Gyakorlat>
+                <Kezdete>2025-06-15</Kezdete>
+                <Idotartama>60</Idotartama>
+                <!-- Muszak többszörös értékű attribútum -->
+                <Muszak>Delelott</Muszak>
+                <Muszak>Delutan</Muszak>
+            </Gyakornok>
+        </Gyakornokok>
+
+        <Vendegek>
+            <Vendeg VKod="V001">
+                <Nev>Szabo Marton</Nev>
+                <Eletkor>32</Eletkor>
+                <Cim>
+                    <Varos>Budapest</Varos>
+                    <Utca>Kossuth Lajos utca</Utca>
+                    <Hazszam>5</Hazszam>
+                </Cim>
+                <Rendelesek>
+                    <Rendeles>
+                        <Osszeg>4500</Osszeg>
+                        <Etel>Marhaporkolt galuskaval</Etel>
+                    </Rendeles>
+                    <Rendeles>
+                        <Osszeg>1800</Osszeg>
+                        <Etel>Somloi galuska</Etel>
+                    </Rendeles>
+                </Rendelesek>
+            </Vendeg>
+
+            <Vendeg VKod="V002">
+                <Nev>Nemeth Eva</Nev>
+                <Eletkor>27</Eletkor>
+                <Cim>
+                    <Varos>Budapest</Varos>
+                    <Utca>Petofi utca</Utca>
+                    <Hazszam>22</Hazszam>
+                </Cim>
+                <Rendelesek>
+                    <Rendeles>
+                        <Osszeg>3200</Osszeg>
+                        <Etel>Rantott sajt rizzsel</Etel>
+                    </Rendeles>
+                </Rendelesek>
+            </Vendeg>
+        </Vendegek>
+    </Etterem>
+</PHRO7R_Vendeglatas>

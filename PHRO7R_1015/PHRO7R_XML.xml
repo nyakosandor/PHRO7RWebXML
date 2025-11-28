@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PHRO7R_Vendeglatas xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PHRO7R_XMLSchemaGPT.xsd">
+
+    <Etterem EKod="EK001">
+        <Nev>Régi Vigadó Étterem</Nev>
+        <Csillag>5</Csillag>
+        <Cim>
+            <Varos>Debrecen</Varos>
+            <Utca>Nagyerdei park</Utca>
+            <Hazszam>1</Hazszam>
+        </Cim>
+        <Foszakacs FKod="FK001">
+            <Nev>Farkas Dániel</Nev>
+            <Eletkor>41</Eletkor>
+            <Vegzettseg>Kulináris Akadémia</Vegzettseg>
+            <Vegzettseg>Nordic Chef School</Vegzettseg>
+        </Foszakacs>
+        <Szakacsok>
+            <Szakacs SzKod="SZ001">
+                <Nev>Molnár Lőrinc</Nev>
+                <Reszleg>Hidegkonyha</Reszleg>
+                <Vegzettseg>Gasztro technikus</Vegzettseg>
+                <Vegzettseg>Nordic Chef School</Vegzettseg>
+            </Szakacs>
+        </Szakacsok>
+        <Gyakornokok>
+            <Gyakornok GyKod="GY001">
+                <Nev>Horváth Bence</Nev>
+                <Gyakorlat>Alap konyhai rotáció</Gyakorlat>
+                <Kezdete>2025-01-01</Kezdete>
+                <Idotartama>6</Idotartama>
+                <Muszak>Délelőtt</Muszak>
+                <Muszak>Éjszaka</Muszak>
+            </Gyakornok>
+            <Gyakornok GyKod="GY002">
+                <Nev>Sárközi Nóra</Nev>
+                <Gyakorlat>Cukrászati asszisztencia</Gyakorlat>
+                <Kezdete>2025-02-15</Kezdete>
+                <Idotartama>4</Idotartama>
+                <Muszak>Délután</Muszak>
+            </Gyakornok>
+        </Gyakornokok>
+        <Vendegek>
+            <Vendeg VKod="VK001">
+                <Nev>Szilágyi Imre</Nev>
+                <Eletkor>24</Eletkor>
+                <Cim>
+                    <Varos>Győr</Varos>
+                    <Utca>Árpád út</Utca>
+                    <Hazszam>18</Hazszam>
+                </Cim>
+                <Rendelesek>
+                    <Rendeles>
+                        <Osszeg>18500</Osszeg>
+                        <Etel>Garnélás rizottó</Etel>
+                    </Rendeles>
+                </Rendelesek>
+            </Vendeg>
+        </Vendegek>
+    </Etterem>
+
+    <Etterem EKod="EK002">
+        <Nev>Calico Jack Pub</Nev>
+        <Csillag>5</Csillag>
+        <Cim>
+            <Varos>Debrecen</Varos>
+            <Utca>Bem tér</Utca>
+            <Hazszam>15</Hazszam>
+        </Cim>
+        <Foszakacs FKod="FK002">
+            <Nev>Lakatos Andor</Nev>
+            <Eletkor>33</Eletkor>
+            <Vegzettseg>Le Cordon Vert</Vegzettseg>
+        </Foszakacs>
+        <Szakacsok>
+            <Szakacs SzKod="SZ002">
+                <Nev>Szűcs Bence</Nev>
+                <Reszleg>Csárda konyha</Reszleg>
+                <Vegzettseg>Konyhamester</Vegzettseg>
+                <Vegzettseg>Le Cordon Vert</Vegzettseg>
+            </Szakacs>
+            <Szakacs SzKod="SZ003">
+                <Nev>Pintér András</Nev>
+                <Reszleg>Tűzhely</Reszleg>
+                <Vegzettseg>Szakács</Vegzettseg>
+                <Vegzettseg>Kulináris Akadémia</Vegzettseg>
+            </Szakacs>
+        </Szakacsok>
+        <Gyakornokok>
+            <Gyakornok GyKod="GY003">
+                <Nev>Balogh Milán</Nev>
+                <Gyakorlat>Melegkonyhai rotáció</Gyakorlat>
+                <Kezdete>2025-03-10</Kezdete>
+                <Idotartama>10</Idotartama>
+                <Muszak>Délelőtt</Muszak>
+            </Gyakornok>
+        </Gyakornokok>
+        <Vendegek>
+            <Vendeg VKod="VK002">
+                <Nev>Fülöp Eszter</Nev>
+                <Eletkor>31</Eletkor>
+                <Cim>
+                    <Varos>Szeged</Varos>
+                    <Utca>Tisza Lajos körút</Utca>
+                    <Hazszam>5</Hazszam>
+                </Cim>
+                <Rendelesek>
+                    <Rendeles>
+                        <Osszeg>22400</Osszeg>
+                        <Etel>Sertésszűz Wellington</Etel>
+                    </Rendeles>
+                </Rendelesek>
+            </Vendeg>
+        </Vendegek>
+    </Etterem>
+
+</PHRO7R_Vendeglatas>
