@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PHRO7R_RaktarkezeloRendszer
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="PHRO7R_XMLSchema.xsd">
+
+    <!-- ==================== BESZÁLLÍTÓK ==================== -->
+    
+    <!-- 1. Beszállító példány -->
+    <Beszallito>
+        <Cegnev>TechParts Kft.</Cegnev>
+        <Adoszam>12345678-2-42</Adoszam>
+        <Elerhetoseg>+36-1-234-5678</Elerhetoseg>
+        <Elerhetoseg>techparts@email.hu</Elerhetoseg>
+    </Beszallito>
+    
+    <!-- 2. Beszállító példány -->
+    <Beszallito>
+        <Cegnev>Global Supply Zrt.</Cegnev>
+        <Adoszam>87654321-1-13</Adoszam>
+        <Elerhetoseg>+36-30-987-6543</Elerhetoseg>
+        <Elerhetoseg>info@globalsupply.hu</Elerhetoseg>
+    </Beszallito>
+
+    <!-- ==================== SZÁLLÍTÓ CÉGEK ==================== -->
+    
+    <!-- 1. Szállító Cég példány -->
+    <SzallitoCeg sz_k="SC001">
+        <Nev>Expressz Fuvar Kft.</Nev>
+        <Adoszam>11223344-2-18</Adoszam>
+        <Elerhetoseg>+36-1-111-2222</Elerhetoseg>
+        <Elerhetoseg>info@expresszfuvar.hu</Elerhetoseg>
+    </SzallitoCeg>
+    
+    <!-- 2. Szállító Cég példány -->
+    <SzallitoCeg sz_k="SC002">
+        <Nev>Gyors Logisztika Zrt.</Nev>
+        <Adoszam>55667788-1-41</Adoszam>
+        <Elerhetoseg>+36-20-333-4444</Elerhetoseg>
+        <Elerhetoseg>kapcsolat@gyorslog.hu</Elerhetoseg>
+    </SzallitoCeg>
+
+    <!-- ==================== DOLGOZÓK ==================== -->
+    
+    <!-- 1. Dolgozó példány -->
+    <Dolgozo Dolgozoid="D001">
+        <Nev>Kovács István</Nev>
+        <Beosztas>Raktárvezető</Beosztas>
+        <Email>kovacs.istvan@raktar.hu</Email>
+        <Telefonszam>+36-20-111-2233</Telefonszam>
+    </Dolgozo>
+    
+    <!-- 2. Dolgozó példány -->
+    <Dolgozo Dolgozoid="D002">
+        <Nev>Nagy Éva</Nev>
+        <Beosztas>Raktáros</Beosztas>
+        <Email>nagy.eva@raktar.hu</Email>
+        <Telefonszam>+36-30-444-5566</Telefonszam>
+    </Dolgozo>
+
+    <!-- ==================== RAKTÁRAK ==================== -->
+    
+    <!-- 1. Raktár példány -->
+    <Raktar Raktarid="R001" R_k="SC001" d_rb="D001">
+        <Nev>Központi Raktár</Nev>
+        <Cim>
+            <Iranyitoszam>1117</Iranyitoszam>
+            <Varos>Budapest</Varos>
+            <Utca>Irinyi József utca</Utca>
+            <Hazszam>42</Hazszam>
+        </Cim>
+        <Tipus>Főraktár</Tipus>
+    </Raktar>
+    
+    <!-- 2. Raktár példány -->
+    <Raktar Raktarid="R002" R_k="SC002" d_rb="D002">
+        <Nev>Északi Elosztóközpont</Nev>
+        <Cim>
+            <Iranyitoszam>2100</Iranyitoszam>
+            <Varos>Gödöllő</Varos>
+            <Utca>Ipari Park út</Utca>
+            <Hazszam>5</Hazszam>
+        </Cim>
+        <Tipus>Elosztóközpont</Tipus>
+    </Raktar>
+
+    <!-- ==================== TERMÉKEK ==================== -->
+    
+    <!-- 1. Termék példány -->
+    <Termek Termekid="T001">
+        <Nev>Ipari csapágy 6205</Nev>
+        <Meret>
+            <Hossz>52</Hossz>
+            <Szelesseg>25</Szelesseg>
+            <Magassag>15</Magassag>
+        </Meret>
+        <Egysegar>4500</Egysegar>
+    </Termek>
+    
+    <!-- 2. Termék példány -->
+    <Termek Termekid="T002">
+        <Nev>Műanyag tárolódoboz 40L</Nev>
+        <Meret>
+            <Hossz>600</Hossz>
+            <Szelesseg>400</Szelesseg>
+            <Magassag>300</Magassag>
+        </Meret>
+        <Egysegar>2800</Egysegar>
+    </Termek>
+
+    <!-- ==================== RAKTÁR-TERMÉK KAPCSOLATOK ==================== -->
+    
+    <!-- 1. RaktárTermék kapcsolat példány (R001 raktárban T001 termék) -->
+    <RaktarTermek r_rb="R001" t_rb="T001">
+        <KeszletDb>150</KeszletDb>
+    </RaktarTermek>
+    
+    <!-- 2. RaktárTermék kapcsolat példány (R001 raktárban T002 termék) -->
+    <RaktarTermek r_rb="R001" t_rb="T002">
+        <KeszletDb>85</KeszletDb>
+    </RaktarTermek>
+    
+    <!-- 3. RaktárTermék kapcsolat példány (R002 raktárban T001 termék) -->
+    <RaktarTermek r_rb="R002" t_rb="T001">
+        <KeszletDb>200</KeszletDb>
+    </RaktarTermek>
+    
+    <!-- 4. RaktárTermék kapcsolat példány (R002 raktárban T002 termék) -->
+    <RaktarTermek r_rb="R002" t_rb="T002">
+        <KeszletDb>120</KeszletDb>
+    </RaktarTermek>
+
+</PHRO7R_RaktarkezeloRendszer>

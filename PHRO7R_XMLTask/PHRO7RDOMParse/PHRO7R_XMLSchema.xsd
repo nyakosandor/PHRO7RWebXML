@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- SAJÁT EGYSZERŰ TÍPUSOK -->
+
+    <!-- Adószám típus: 8 számjegy-1 számjegy-2 számjegy formátumban -->
+    <xs:simpleType name="AdoszamType">
+        <xs:annotation>
+            <xs:documentation>Magyar adószám formátum: ########-#-##</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{8}-[0-9]{1}-[0-9]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Email cím típus -->
+    <xs:simpleType name="EmailType">
+        <xs:annotation>
+            <xs:documentation>Email cím formátum validálása</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Telefonszám típus -->
+    <xs:simpleType name="TelefonszamType">
+        <xs:annotation>
+            <xs:documentation>Magyar telefonszám formátum: +36-XX-XXX-XXXX</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\+36-[0-9]{1,2}-[0-9]{3}-[0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Irányítószám típus: 4 számjegy -->
+    <xs:simpleType name="IranyitoszamType">
+        <xs:annotation>
+            <xs:documentation>Magyar irányítószám: 4 számjegy</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1000"/>
+            <xs:maxInclusive value="9999"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Raktár azonosító típus -->
+    <xs:simpleType name="RaktaridType">
+        <xs:annotation>
+            <xs:documentation>Raktár azonosító: R + 3 számjegy</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="R[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Termék azonosító típus -->
+    <xs:simpleType name="TermekidType">
+        <xs:annotation>
+            <xs:documentation>Termék azonosító: T + 3 számjegy</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="T[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Dolgozó azonosító típus -->
+    <xs:simpleType name="DolgozoidType">
+        <xs:annotation>
+            <xs:documentation>Dolgozó azonosító: D + 3 számjegy</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="D[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Szállító cég azonosító típus -->
+    <xs:simpleType name="SzallitoCegIdType">
+        <xs:annotation>
+            <xs:documentation>Szállító cég azonosító: SC + 3 számjegy</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="SC[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Név típus: min 2, max 100 karakter -->
+    <xs:simpleType name="NevType">
+        <xs:annotation>
+            <xs:documentation>Általános név típus: 2-100 karakter</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <xs:maxLength value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Pozitív egész szám típus készlethez -->
+    <xs:simpleType name="KeszletType">
+        <xs:annotation>
+            <xs:documentation>Készlet darabszám: nem negatív egész</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:nonNegativeInteger"/>
+    </xs:simpleType>
+
+    <!-- Ár típus -->
+    <xs:simpleType name="ArType">
+        <xs:annotation>
+            <xs:documentation>Egységár típus: pozitív egész szám (Ft)</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger"/>
+    </xs:simpleType>
+
+    <!-- Méret érték típus -->
+    <xs:simpleType name="MeretErtekType">
+        <xs:annotation>
+            <xs:documentation>Méret érték: pozitív egész szám (mm)</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger"/>
+    </xs:simpleType>
+
+    <!-- SAJÁT ÖSSZETETT TÍPUSOK -->
+
+    <!-- Cím összetett típus -->
+    <xs:complexType name="CimType">
+        <xs:annotation>
+            <xs:documentation>Cím típus: irányítószám, város, utca, házszám</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Irányítószám elem -->
+            <xs:element name="Iranyitoszam" type="IranyitoszamType">
+                <xs:annotation>
+                    <xs:documentation>4 számjegyű magyar irányítószám</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Város elem -->
+            <xs:element name="Varos" type="NevType">
+                <xs:annotation>
+                    <xs:documentation>Település neve</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Utca elem -->
+            <xs:element name="Utca" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Utca neve (közterület típussal)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Házszám elem -->
+            <xs:element name="Hazszam" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Házszám (szám vagy szám/betű kombináció)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Méret összetett típus -->
+    <xs:complexType name="MeretType">
+        <xs:annotation>
+            <xs:documentation>Méret típus: hossz, szélesség, magasság (mm-ben)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Hosszúság elem -->
+            <xs:element name="Hossz" type="MeretErtekType">
+                <xs:annotation>
+                    <xs:documentation>Termék hossza mm-ben</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Szélesség elem -->
+            <xs:element name="Szelesseg" type="MeretErtekType">
+                <xs:annotation>
+                    <xs:documentation>Termék szélessége mm-ben</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Magasság elem -->
+            <xs:element name="Magassag" type="MeretErtekType">
+                <xs:annotation>
+                    <xs:documentation>Termék magassága mm-ben</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Beszállító összetett típus -->
+    <xs:complexType name="BeszallitoType">
+        <xs:annotation>
+            <xs:documentation>Beszállító entitás: cég adatai és elérhetőségek</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Cégnév elem -->
+            <xs:element name="Cegnev" type="NevType">
+                <xs:annotation>
+                    <xs:documentation>Beszállító cég hivatalos neve</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Adószám elem -->
+            <xs:element name="Adoszam" type="AdoszamType">
+                <xs:annotation>
+                    <xs:documentation>Beszállító adószáma</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Elérhetőség elemek (legalább 1, lehet több) -->
+            <xs:element name="Elerhetoseg" type="xs:string" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Elérhetőség: telefon vagy email (többszörös)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Szállító cég összetett típus -->
+    <xs:complexType name="SzallitoCegType">
+        <xs:annotation>
+            <xs:documentation>Szállító cég entitás: fuvarozó cég adatai</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Név elem -->
+            <xs:element name="Nev" type="NevType">
+                <xs:annotation>
+                    <xs:documentation>Szállító cég neve</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Adószám elem -->
+            <xs:element name="Adoszam" type="AdoszamType">
+                <xs:annotation>
+                    <xs:documentation>Szállító cég adószáma</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Elérhetőség elemek (opcionális, lehet több) -->
+            <xs:element name="Elerhetoseg" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Elérhetőség: telefon vagy email (opcionális, többszörös)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <!-- Szállító cég azonosító attribútum -->
+        <xs:attribute name="sz_k" type="SzallitoCegIdType" use="required">
+            <xs:annotation>
+                <xs:documentation>Szállító cég egyedi azonosítója (kulcs)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- Dolgozó összetett típus -->
+    <xs:complexType name="DolgozoType">
+        <xs:annotation>
+            <xs:documentation>Dolgozó entitás: alkalmazott adatai</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Név elem -->
+            <xs:element name="Nev" type="NevType">
+                <xs:annotation>
+                    <xs:documentation>Dolgozó teljes neve</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Beosztás elem -->
+            <xs:element name="Beosztas" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Dolgozó munkaköri beosztása</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Email elem -->
+            <xs:element name="Email" type="EmailType">
+                <xs:annotation>
+                    <xs:documentation>Dolgozó munkahelyi email címe</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Telefonszám elem -->
+            <xs:element name="Telefonszam" type="TelefonszamType">
+                <xs:annotation>
+                    <xs:documentation>Dolgozó telefonszáma</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <!-- Dolgozó azonosító attribútum -->
+        <xs:attribute name="Dolgozoid" type="DolgozoidType" use="required">
+            <xs:annotation>
+                <xs:documentation>Dolgozó egyedi azonosítója</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- Raktár összetett típus -->
+    <xs:complexType name="RaktarType">
+        <xs:annotation>
+            <xs:documentation>Raktár entitás: raktár adatai és kapcsolatai</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Név elem -->
+            <xs:element name="Nev" type="NevType">
+                <xs:annotation>
+                    <xs:documentation>Raktár megnevezése</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Cím elem (összetett) -->
+            <xs:element name="Cim" type="CimType">
+                <xs:annotation>
+                    <xs:documentation>Raktár címe</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Típus elem -->
+            <xs:element name="Tipus" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Raktár típusa (pl. Főraktár, Elosztóközpont)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <!-- Raktár azonosító attribútum (elsődleges kulcs) -->
+        <xs:attribute name="Raktarid" type="RaktaridType" use="required">
+            <xs:annotation>
+                <xs:documentation>Raktár egyedi azonosítója (elsődleges kulcs)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <!-- Szállító cég kapcsolat attribútum (idegen kulcs) -->
+        <xs:attribute name="R_k" type="SzallitoCegIdType" use="required">
+            <xs:annotation>
+                <xs:documentation>Kapcsolódó szállító cég azonosítója (idegen kulcs)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <!-- Dolgozó kapcsolat attribútum (idegen kulcs) -->
+        <xs:attribute name="d_rb" type="DolgozoidType" use="required">
+            <xs:annotation>
+                <xs:documentation>Felelős dolgozó azonosítója (idegen kulcs)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- Termék összetett típus -->
+    <xs:complexType name="TermekType">
+        <xs:annotation>
+            <xs:documentation>Termék entitás: termék adatai</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Név elem -->
+            <xs:element name="Nev" type="NevType">
+                <xs:annotation>
+                    <xs:documentation>Termék megnevezése</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Méret elem (összetett) -->
+            <xs:element name="Meret" type="MeretType">
+                <xs:annotation>
+                    <xs:documentation>Termék méretei</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Egységár elem -->
+            <xs:element name="Egysegar" type="ArType">
+                <xs:annotation>
+                    <xs:documentation>Termék egységára Ft-ban</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <!-- Termék azonosító attribútum -->
+        <xs:attribute name="Termekid" type="TermekidType" use="required">
+            <xs:annotation>
+                <xs:documentation>Termék egyedi azonosítója</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- Raktár-Termék kapcsolat összetett típus -->
+    <xs:complexType name="RaktarTermekType">
+        <xs:annotation>
+            <xs:documentation>Raktár-Termék kapcsoló entitás: készlet nyilvántartás</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- Készlet darabszám elem -->
+            <xs:element name="KeszletDb" type="KeszletType">
+                <xs:annotation>
+                    <xs:documentation>Raktáron lévő készlet mennyisége</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <!-- Raktár kapcsolat attribútum (idegen kulcs) -->
+        <xs:attribute name="r_rb" type="RaktaridType" use="required">
+            <xs:annotation>
+                <xs:documentation>Kapcsolódó raktár azonosítója (idegen kulcs)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <!-- Termék kapcsolat attribútum (idegen kulcs) -->
+        <xs:attribute name="t_rb" type="TermekidType" use="required">
+            <xs:annotation>
+                <xs:documentation>Kapcsolódó termék azonosítója (idegen kulcs)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- GYÖKÉRELEM DEFINÍCIÓ -->
+
+    <!-- Raktárkezelő Rendszer gyökérelem -->
+    <xs:element name="PHRO7R_RaktarkezeloRendszer">
+        <xs:annotation>
+            <xs:documentation>
+                PHRO7R Raktárkezelő Rendszer gyökéreleme.
+                Tartalmazza az összes entitást: beszállítók, szállító cégek,
+                dolgozók, raktárak, termékek és raktár-termék kapcsolatok.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Beszállító elemek (legalább 1) -->
+                <xs:element name="Beszallito" type="BeszallitoType" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Beszállító entitás példányok</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <!-- Szállító cég elemek (legalább 1) -->
+                <xs:element name="SzallitoCeg" type="SzallitoCegType" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Szállító cég entitás példányok</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <!-- Dolgozó elemek (legalább 1) -->
+                <xs:element name="Dolgozo" type="DolgozoType" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Dolgozó entitás példányok</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <!-- Raktár elemek (legalább 1) -->
+                <xs:element name="Raktar" type="RaktarType" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Raktár entitás példányok</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <!-- Termék elemek (legalább 1) -->
+                <xs:element name="Termek" type="TermekType" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Termék entitás példányok</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <!-- Raktár-Termék kapcsolat elemek (legalább 1) -->
+                <xs:element name="RaktarTermek" type="RaktarTermekType" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Raktár-Termék kapcsolat példányok (készlet nyilvántartás)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+
+        <!-- KULCS ÉS HIVATKOZÁS MEGKÖTÉSEK -->
+
+        <!-- Szállító cég elsődleges kulcs -->
+        <xs:key name="SzallitoCegKey">
+            <xs:annotation>
+                <xs:documentation>Szállító cég egyediség biztosítása</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="SzallitoCeg"/>
+            <xs:field xpath="@sz_k"/>
+        </xs:key>
+
+        <!-- Dolgozó elsődleges kulcs -->
+        <xs:key name="DolgozoKey">
+            <xs:annotation>
+                <xs:documentation>Dolgozó egyediség biztosítása</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="Dolgozo"/>
+            <xs:field xpath="@Dolgozoid"/>
+        </xs:key>
+
+        <!-- Raktár elsődleges kulcs -->
+        <xs:key name="RaktarKey">
+            <xs:annotation>
+                <xs:documentation>Raktár egyediség biztosítása</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="Raktar"/>
+            <xs:field xpath="@Raktarid"/>
+        </xs:key>
+
+        <!-- Termék elsődleges kulcs -->
+        <xs:key name="TermekKey">
+            <xs:annotation>
+                <xs:documentation>Termék egyediség biztosítása</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="Termek"/>
+            <xs:field xpath="@Termekid"/>
+        </xs:key>
+
+        <!-- Raktár -> Szállító cég idegen kulcs hivatkozás -->
+        <xs:keyref name="RaktarSzallitoCegRef" refer="SzallitoCegKey">
+            <xs:annotation>
+                <xs:documentation>Raktár hivatkozása szállító cégre</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="Raktar"/>
+            <xs:field xpath="@R_k"/>
+        </xs:keyref>
+
+        <!-- Raktár -> Dolgozó idegen kulcs hivatkozás -->
+        <xs:keyref name="RaktarDolgozoRef" refer="DolgozoKey">
+            <xs:annotation>
+                <xs:documentation>Raktár hivatkozása felelős dolgozóra</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="Raktar"/>
+            <xs:field xpath="@d_rb"/>
+        </xs:keyref>
+
+        <!-- RaktarTermek -> Raktár idegen kulcs hivatkozás -->
+        <xs:keyref name="RaktarTermekRaktarRef" refer="RaktarKey">
+            <xs:annotation>
+                <xs:documentation>Raktár-Termék kapcsolat hivatkozása raktárra</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="RaktarTermek"/>
+            <xs:field xpath="@r_rb"/>
+        </xs:keyref>
+
+        <!-- RaktarTermek -> Termék idegen kulcs hivatkozás -->
+        <xs:keyref name="RaktarTermekTermekRef" refer="TermekKey">
+            <xs:annotation>
+                <xs:documentation>Raktár-Termék kapcsolat hivatkozása termékre</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="RaktarTermek"/>
+            <xs:field xpath="@t_rb"/>
+        </xs:keyref>
+
+    </xs:element>
+
+</xs:schema>
