@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHRO7R IndexedDB - Tulajdonos & Autó</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 800px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .btn-primary { background: #3498db; color: white; }
+        .btn-primary:hover { background: #2980b9; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-success:hover { background: #1e8449; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn-warning:hover { background: #d68910; }
+        .btn-info { background: #17a2b8; color: white; }
+        .btn-info:hover { background: #138496; }
+        .btn-sm { padding: 5px 10px; font-size: 0.8rem; }
+        
+        .section-title {
+            font-weight: bold;
+            margin: 15px 0 8px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .list-box {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+        }
+        
+        .list-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .list-item:hover {
+            background: #e9ecef;
+        }
+        
+        .list-item-info {
+            flex: 1;
+        }
+        
+        .list-item-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .message {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+            font-size: 0.9rem;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        .hidden { display: none; }
+        
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .empty-text {
+            color: #999;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHRO7R IndexedDB - Tulajdonos & Autó</h1>
+        
+        <div id="message" class="message"></div>
+        
+        <div class="two-columns">
+            <!-- Tulajdonos Section -->
+            <div class="card">
+                <h2>Tulajdonos</h2>
+                
+                <form id="tulajdonosForm">
+                    <input type="hidden" id="tulajEditId" value="">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tulajNev">Név</label>
+                            <input type="text" id="tulajNev" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tulajKor">Kor</label>
+                            <input type="number" id="tulajKor" min="18" max="120" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tulajCim">Cím</label>
+                        <input type="text" id="tulajCim" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="tulajSubmitBtn">Hozzáadás</button>
+                    <button type="button" class="btn btn-warning" onclick="resetTulajForm()" style="display:none;" id="tulajCancelBtn">Mégse</button>
+                </form>
+                
+                <hr>
+                
+                <div class="section-title">Keresés</div>
+                <div class="form-group">
+                    <input type="text" id="tulajSearch" placeholder="Keresés név alapján...">
+                </div>
+                
+                <div class="section-title">Összes tulajdonos</div>
+                <div class="list-box" id="tulajdonosList">
+                    <div class="empty-text">Nincs tulajdonos</div>
+                </div>
+            </div>
+            
+            <!-- Autó Section -->
+            <div class="card">
+                <h2>Autó</h2>
+                
+                <form id="autoForm">
+                    <input type="hidden" id="autoEditId" value="">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="autoRendszam">Rendszám</label>
+                            <input type="text" id="autoRendszam" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="autoTipus">Típus</label>
+                            <input type="text" id="autoTipus" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="autoSzin">Szín</label>
+                            <input type="text" id="autoSzin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="autoAr">Ár (Ft)</label>
+                            <input type="number" id="autoAr" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="autoEv">Év</label>
+                            <input type="number" id="autoEv" min="1900" max="2025" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="autoTulaj">Tulaj</label>
+                            <select id="autoTulaj" required>
+                                <option value="">-- Válassz tulajdonost --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="autoSubmitBtn">Hozzáadás</button>
+                    <button type="button" class="btn btn-warning" onclick="resetAutoForm()" style="display:none;" id="autoCancelBtn">Mégse</button>
+                </form>
+                
+                <hr>
+                
+                <div class="section-title">Keresés</div>
+                <div class="form-group">
+                    <input type="text" id="autoSearch" placeholder="Keresés rendszám, típus, szín alapján...">
+                </div>
+                
+                <div class="section-title">Szűrés</div>
+                <div class="form-group">
+                    <select id="autoFilter">
+                        <option value="">Összes autó</option>
+                    </select>
+                </div>
+                
+                <div class="section-title">Autók listája</div>
+                <div class="list-box" id="autokList">
+                    <div class="empty-text">Nincs autó</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Export/Import Section -->
+        <div class="card">
+            <h2>Adatok mentése és betöltése</h2>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">
+                Az exportált fájl JSON formátumban tartalmazza az adatbázist és betölthető ez vagy másik oldalon is.
+            </p>
+            <button class="btn btn-success" onclick="exportJSON()">Exportálás JSON-ba</button>
+            <button class="btn btn-info" onclick="document.getElementById('importFile').click()">Importálás JSON-ból</button>
+            <input type="file" id="importFile" class="hidden" accept=".json" onchange="importJSON(event)">
+        </div>
+        
+        <div class="footer">
+            Készítette: Nyakó Sándor | NEPTUN: PHRO7R | Adatbázisnév: AutoTulajDB_v1 | © 2025
+        </div>
+    </div>
+    
+    <script>
+        const DB_NAME = 'AutoTulajDB_v1';
+        const DB_VERSION = 1;
+        let db;
+        
+        // Initialize IndexedDB
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (e) => {
+                    const database = e.target.result;
+                    
+                    // Tulajdonos store
+                    if (!database.objectStoreNames.contains('tulajdonosok')) {
+                        const tulajStore = database.createObjectStore('tulajdonosok', { keyPath: 'id', autoIncrement: true });
+                        tulajStore.createIndex('nev', 'nev', { unique: false });
+                    }
+                    
+                    // Autó store
+                    if (!database.objectStoreNames.contains('autok')) {
+                        const autoStore = database.createObjectStore('autok', { keyPath: 'id', autoIncrement: true });
+                        autoStore.createIndex('tulajId', 'tulajId', { unique: false });
+                        autoStore.createIndex('rendszam', 'rendszam', { unique: true });
+                    }
+                };
+            });
+        }
+        
+        // Show message
+        function showMessage(text, type = 'success') {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type} show`;
+            setTimeout(() => msg.classList.remove('show'), 3000);
+        }
+        
+        // ==================== TULAJDONOS CRUD ====================
+        
+        // Add/Update Tulajdonos
+        document.getElementById('tulajdonosForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const editId = document.getElementById('tulajEditId').value;
+            const tulaj = {
+                nev: document.getElementById('tulajNev').value.trim(),
+                kor: parseInt(document.getElementById('tulajKor').value),
+                cim: document.getElementById('tulajCim').value.trim()
+            };
+            
+            const tx = db.transaction('tulajdonosok', 'readwrite');
+            const store = tx.objectStore('tulajdonosok');
+            
+            if (editId) {
+                tulaj.id = parseInt(editId);
+                store.put(tulaj);
+                showMessage('Tulajdonos módosítva!');
+            } else {
+                store.add(tulaj);
+                showMessage('Tulajdonos hozzáadva!');
+            }
+            
+            await tx.complete;
+            resetTulajForm();
+            loadTulajdonosok();
+            updateTulajDropdowns();
+        });
+        
+        // Load Tulajdonosok
+        async function loadTulajdonosok() {
+            const search = document.getElementById('tulajSearch').value.toLowerCase();
+            const tx = db.transaction('tulajdonosok', 'readonly');
+            const store = tx.objectStore('tulajdonosok');
+            const request = store.getAll();
+            
+            request.onsuccess = () => {
+                let tulajdonosok = request.result;
+                
+                // Filter by search
+                if (search) {
+                    tulajdonosok = tulajdonosok.filter(t => t.nev.toLowerCase().includes(search));
+                }
+                
+                const listEl = document.getElementById('tulajdonosList');
+                
+                if (tulajdonosok.length === 0) {
+                    listEl.innerHTML = '<div class="empty-text">Nincs találat</div>';
+                } else {
+                    listEl.innerHTML = tulajdonosok.map(t => `
+                        <div class="list-item">
+                            <div class="list-item-info">
+                                <strong>${t.nev}</strong> (${t.kor} év)<br>
+                                <small>${t.cim}</small>
+                            </div>
+                            <div class="list-item-actions">
+                                <button class="btn btn-warning btn-sm" onclick="editTulaj(${t.id})">Szerk</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteTulaj(${t.id})">Törlés</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            };
+        }
+        
+        // Edit Tulajdonos
+        async function editTulaj(id) {
+            const tx = db.transaction('tulajdonosok', 'readonly');
+            const store = tx.objectStore('tulajdonosok');
+            const request = store.get(id);
+            
+            request.onsuccess = () => {
+                const t = request.result;
+                document.getElementById('tulajNev').value = t.nev;
+                document.getElementById('tulajKor').value = t.kor;
+                document.getElementById('tulajCim').value = t.cim;
+                document.getElementById('tulajEditId').value = t.id;
+                document.getElementById('tulajSubmitBtn').textContent = 'Mentés';
+                document.getElementById('tulajCancelBtn').style.display = 'inline-block';
+            };
+        }
+        
+        // Delete Tulajdonos
+        async function deleteTulaj(id) {
+            if (!confirm('Biztosan törölni szeretnéd? Az autói is törlődnek!')) return;
+            
+            // Delete related cars first
+            const autoTx = db.transaction('autok', 'readwrite');
+            const autoStore = autoTx.objectStore('autok');
+            const autoIndex = autoStore.index('tulajId');
+            const autoRequest = autoIndex.getAllKeys(id);
+            
+            autoRequest.onsuccess = () => {
+                autoRequest.result.forEach(key => autoStore.delete(key));
+            };
+            
+            // Delete tulajdonos
+            const tx = db.transaction('tulajdonosok', 'readwrite');
+            tx.objectStore('tulajdonosok').delete(id);
+            
+            showMessage('Tulajdonos és autói törölve!');
+            loadTulajdonosok();
+            loadAutok();
+            updateTulajDropdowns();
+        }
+        
+        // Reset Tulajdonos form
+        function resetTulajForm() {
+            document.getElementById('tulajdonosForm').reset();
+            document.getElementById('tulajEditId').value = '';
+            document.getElementById('tulajSubmitBtn').textContent = 'Hozzáadás';
+            document.getElementById('tulajCancelBtn').style.display = 'none';
+        }
+        
+        // ==================== AUTÓ CRUD ====================
+        
+        // Add/Update Autó
+        document.getElementById('autoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const editId = document.getElementById('autoEditId').value;
+            const auto = {
+                rendszam: document.getElementById('autoRendszam').value.trim().toUpperCase(),
+                tipus: document.getElementById('autoTipus').value.trim(),
+                szin: document.getElementById('autoSzin').value.trim(),
+                ar: parseInt(document.getElementById('autoAr').value),
+                ev: parseInt(document.getElementById('autoEv').value),
+                tulajId: parseInt(document.getElementById('autoTulaj').value)
+            };
+            
+            const tx = db.transaction('autok', 'readwrite');
+            const store = tx.objectStore('autok');
+            
+            if (editId) {
+                auto.id = parseInt(editId);
+                store.put(auto);
+                showMessage('Autó módosítva!');
+            } else {
+                try {
+                    store.add(auto);
+                    showMessage('Autó hozzáadva!');
+                } catch (err) {
+                    showMessage('Ez a rendszám már létezik!', 'error');
+                    return;
+                }
+            }
+            
+            resetAutoForm();
+            loadAutok();
+        });
+        
+        // Load Autók
+        async function loadAutok() {
+            const search = document.getElementById('autoSearch').value.toLowerCase();
+            const filterTulaj = document.getElementById('autoFilter').value;
+            
+            const tx = db.transaction(['autok', 'tulajdonosok'], 'readonly');
+            const autoStore = tx.objectStore('autok');
+            const tulajStore = tx.objectStore('tulajdonosok');
+            
+            const autoRequest = autoStore.getAll();
+            const tulajRequest = tulajStore.getAll();
+            
+            tulajRequest.onsuccess = () => {
+                const tulajMap = {};
+                tulajRequest.result.forEach(t => tulajMap[t.id] = t.nev);
+                
+                autoRequest.onsuccess = () => {
+                    let autok = autoRequest.result;
+                    
+                    // Filter by search
+                    if (search) {
+                        autok = autok.filter(a => 
+                            a.rendszam.toLowerCase().includes(search) ||
+                            a.tipus.toLowerCase().includes(search) ||
+                            a.szin.toLowerCase().includes(search)
+                        );
+                    }
+                    
+                    // Filter by tulajdonos
+                    if (filterTulaj) {
+                        autok = autok.filter(a => a.tulajId === parseInt(filterTulaj));
+                    }
+                    
+                    const listEl = document.getElementById('autokList');
+                    
+                    if (autok.length === 0) {
+                        listEl.innerHTML = '<div class="empty-text">Nincs találat</div>';
+                    } else {
+                        listEl.innerHTML = autok.map(a => `
+                            <div class="list-item">
+                                <div class="list-item-info">
+                                    <strong>${a.rendszam}</strong> - ${a.tipus} (${a.szin})<br>
+                                    <small>${a.ev} | ${a.ar.toLocaleString()} Ft | Tulaj: ${tulajMap[a.tulajId] || '?'}</small>
+                                </div>
+                                <div class="list-item-actions">
+                                    <button class="btn btn-warning btn-sm" onclick="editAuto(${a.id})">Szerk</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteAuto(${a.id})">Törlés</button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                };
+            };
+        }
+        
+        // Edit Autó
+        async function editAuto(id) {
+            const tx = db.transaction('autok', 'readonly');
+            const store = tx.objectStore('autok');
+            const request = store.get(id);
+            
+            request.onsuccess = () => {
+                const a = request.result;
+                document.getElementById('autoRendszam').value = a.rendszam;
+                document.getElementById('autoTipus').value = a.tipus;
+                document.getElementById('autoSzin').value = a.szin;
+                document.getElementById('autoAr').value = a.ar;
+                document.getElementById('autoEv').value = a.ev;
+                document.getElementById('autoTulaj').value = a.tulajId;
+                document.getElementById('autoEditId').value = a.id;
+                document.getElementById('autoSubmitBtn').textContent = 'Mentés';
+                document.getElementById('autoCancelBtn').style.display = 'inline-block';
+            };
+        }
+        
+        // Delete Autó
+        async function deleteAuto(id) {
+            if (!confirm('Biztosan törölni szeretnéd?')) return;
+            
+            const tx = db.transaction('autok', 'readwrite');
+            tx.objectStore('autok').delete(id);
+            
+            showMessage('Autó törölve!');
+            loadAutok();
+        }
+        
+        // Reset Autó form
+        function resetAutoForm() {
+            document.getElementById('autoForm').reset();
+            document.getElementById('autoEditId').value = '';
+            document.getElementById('autoSubmitBtn').textContent = 'Hozzáadás';
+            document.getElementById('autoCancelBtn').style.display = 'none';
+        }
+        
+        // Update Tulajdonos dropdowns
+        async function updateTulajDropdowns() {
+            const tx = db.transaction('tulajdonosok', 'readonly');
+            const store = tx.objectStore('tulajdonosok');
+            const request = store.getAll();
+            
+            request.onsuccess = () => {
+                const tulajdonosok = request.result;
+                const options = tulajdonosok.map(t => `<option value="${t.id}">${t.nev}</option>`).join('');
+                
+                document.getElementById('autoTulaj').innerHTML = 
+                    '<option value="">-- Válassz tulajdonost --</option>' + options;
+                
+                document.getElementById('autoFilter').innerHTML = 
+                    '<option value="">Összes autó</option>' + options;
+            };
+        }
+        
+        // ==================== EXPORT/IMPORT ====================
+        
+        // Export to JSON
+        async function exportJSON() {
+            const tx = db.transaction(['tulajdonosok', 'autok'], 'readonly');
+            
+            const tulajRequest = tx.objectStore('tulajdonosok').getAll();
+            const autoRequest = tx.objectStore('autok').getAll();
+            
+            tulajRequest.onsuccess = () => {
+                autoRequest.onsuccess = () => {
+                    const data = {
+                        dbName: DB_NAME,
+                        version: DB_VERSION,
+                        exportDate: new Date().toISOString(),
+                        tulajdonosok: tulajRequest.result,
+                        autok: autoRequest.result
+                    };
+                    
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'PHRO7R_AutoTulajDB.json';
+                    a.click();
+                    
+                    showMessage('Adatbázis exportálva!');
+                };
+            };
+        }
+        
+        // Import from JSON
+        function importJSON(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = async function(ev) {
+                try {
+                    const data = JSON.parse(ev.target.result);
+                    
+                    if (!data.tulajdonosok || !data.autok) {
+                        throw new Error('Invalid format');
+                    }
+                    
+                    // Clear existing data
+                    const clearTx = db.transaction(['tulajdonosok', 'autok'], 'readwrite');
+                    clearTx.objectStore('tulajdonosok').clear();
+                    clearTx.objectStore('autok').clear();
+                    
+                    // Wait a bit then add new data
+                    setTimeout(async () => {
+                        const tx = db.transaction(['tulajdonosok', 'autok'], 'readwrite');
+                        
+                        data.tulajdonosok.forEach(t => {
+                            tx.objectStore('tulajdonosok').add(t);
+                        });
+                        
+                        data.autok.forEach(a => {
+                            tx.objectStore('autok').add(a);
+                        });
+                        
+                        showMessage(`Import sikeres! ${data.tulajdonosok.length} tulajdonos, ${data.autok.length} autó.`);
+                        loadTulajdonosok();
+                        loadAutok();
+                        updateTulajDropdowns();
+                    }, 100);
+                    
+                } catch (err) {
+                    showMessage('Hibás JSON formátum!', 'error');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+        
+        // ==================== EVENTS ====================
+        
+        document.getElementById('tulajSearch').addEventListener('input', loadTulajdonosok);
+        document.getElementById('autoSearch').addEventListener('input', loadAutok);
+        document.getElementById('autoFilter').addEventListener('change', loadAutok);
+        
+        // ==================== INIT ====================
+        
+        // Load sample data if empty
+        async function loadSampleData() {
+            const tx = db.transaction('tulajdonosok', 'readonly');
+            const count = await new Promise(resolve => {
+                const req = tx.objectStore('tulajdonosok').count();
+                req.onsuccess = () => resolve(req.result);
+            });
+            
+            if (count === 0) {
+                const sampleTulajdonosok = [
+                    { id: 1, nev: 'Kovács János', kor: 35, cim: 'Budapest, Fő utca 1.' },
+                    { id: 2, nev: 'Nagy Éva', kor: 28, cim: 'Miskolc, Petőfi u. 15.' },
+                    { id: 3, nev: 'Szabó Péter', kor: 45, cim: 'Debrecen, Kossuth tér 3.' }
+                ];
+                
+                const sampleAutok = [
+                    { id: 1, rendszam: 'ABC-123', tipus: 'Opel Astra', szin: 'Kék', ar: 2500000, ev: 2018, tulajId: 1 },
+                    { id: 2, rendszam: 'XYZ-789', tipus: 'BMW 320', szin: 'Fekete', ar: 5500000, ev: 2020, tulajId: 1 },
+                    { id: 3, rendszam: 'DEF-456', tipus: 'Toyota Corolla', szin: 'Fehér', ar: 3200000, ev: 2019, tulajId: 2 },
+                    { id: 4, rendszam: 'GHI-321', tipus: 'Volkswagen Golf', szin: 'Szürke', ar: 2800000, ev: 2017, tulajId: 3 }
+                ];
+                
+                const addTx = db.transaction(['tulajdonosok', 'autok'], 'readwrite');
+                sampleTulajdonosok.forEach(t => addTx.objectStore('tulajdonosok').add(t));
+                sampleAutok.forEach(a => addTx.objectStore('autok').add(a));
+            }
+        }
+        
+        // Initialize
+        initDB().then(async () => {
+            await loadSampleData();
+            loadTulajdonosok();
+            loadAutok();
+            updateTulajDropdowns();
+        }).catch(err => {
+            showMessage('Adatbázis hiba: ' + err.message, 'error');
+        });
+    </script>
+</body>
+</html>
+

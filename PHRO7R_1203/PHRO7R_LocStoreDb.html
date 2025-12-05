@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHRO7R Hallgatók - Local Storage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        
+        h2 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+        
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            align-items: flex-end;
+        }
+        
+        .controls .form-group {
+            margin-bottom: 0;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .tab {
+            padding: 8px 16px;
+            background: #ecf0f1;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .tab:hover {
+            background: #bdc3c7;
+        }
+        
+        .tab.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #34495e;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* Message */
+        .message {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+        
+        /* Hidden */
+        .hidden {
+            display: none;
+        }
+        
+        /* Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 800px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHRO7R Hallgatók</h1>
+        
+        <div class="main-layout">
+            <!-- Form -->
+            <div class="card">
+                <h2 id="formTitle">Új hallgató hozzáadása</h2>
+                
+                <div id="message" class="message"></div>
+                
+                <form id="studentForm">
+                    <input type="hidden" id="editIndex" value="">
+                    
+                    <div class="form-group">
+                        <label for="nev">Név</label>
+                        <input type="text" id="nev" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="evfolyam">Évfolyam</label>
+                        <input type="number" id="evfolyam" min="1" max="10" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="szak">Szak</label>
+                        <input type="text" id="szak" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="neptun">NEPTUN</label>
+                        <input type="text" id="neptun" maxlength="6" required style="text-transform: uppercase;">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%;">
+                        Hozzáadás
+                    </button>
+                </form>
+            </div>
+            
+            <!-- List -->
+            <div class="card">
+                <h2>Hallgatók listája</h2>
+                
+                <!-- Controls -->
+                <div class="controls">
+                    <div class="form-group">
+                        <label for="search">Keresés</label>
+                        <input type="text" id="search" placeholder="Név, évfolyam, szak, email, NEPTUN...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sort">Rendezés</label>
+                        <select id="sort">
+                            <option value="nev_asc">Név növekvő</option>
+                            <option value="nev_desc">Név csökkenő</option>
+                            <option value="evfolyam_asc">Évfolyam növekvő</option>
+                            <option value="evfolyam_desc">Évfolyam csökkenő</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong>Export / Import JSON</strong>
+                    <div class="btn-group" style="margin-top: 5px;">
+                        <button class="btn btn-success btn-sm" onclick="exportJSON()">Export JSON</button>
+                        <button class="btn btn-warning btn-sm" onclick="document.getElementById('importFile').click()">Import JSON</button>
+                        <input type="file" id="importFile" class="hidden" accept=".json" onchange="importJSON(event)">
+                    </div>
+                </div>
+                
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('all', this)">Teljes adatbázis</button>
+                    <button class="tab" onclick="switchTab('search', this)">Keresési találatok</button>
+                </div>
+                
+                <!-- Table -->
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>Név</th>
+                            <th>Évfolyam</th>
+                            <th>Szak</th>
+                            <th>Email</th>
+                            <th>NEPTUN</th>
+                            <th>Műveletek</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                    </tbody>
+                </table>
+                
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    Nincs még hallgató az adatbázisban.
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Készítette: Nyakó Sándor | NEPTUN: PHRO7R | © 2025
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'PHRO7R_hallgatok';
+        
+        // Get students from Local Storage
+        function getStudents() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+        
+        // Save students to Local Storage
+        function saveStudents(students) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+        }
+        
+        // Show message
+        function showMessage(text, type = 'success') {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type} show`;
+            setTimeout(() => msg.classList.remove('show'), 3000);
+        }
+        
+        // Render table
+        function renderTable() {
+            const students = getStudents();
+            const search = document.getElementById('search').value.toLowerCase();
+            const sortValue = document.getElementById('sort').value;
+            
+            // Filter
+            let filtered = students.filter(s => {
+                if (!search) return true;
+                return s.nev.toLowerCase().includes(search) ||
+                       s.evfolyam.toString().includes(search) ||
+                       s.szak.toLowerCase().includes(search) ||
+                       s.email.toLowerCase().includes(search) ||
+                       s.neptun.toLowerCase().includes(search);
+            });
+            
+            // Sort
+            const [field, dir] = sortValue.split('_');
+            filtered.sort((a, b) => {
+                let valA = field === 'evfolyam' ? parseInt(a[field]) : a[field].toLowerCase();
+                let valB = field === 'evfolyam' ? parseInt(b[field]) : b[field].toLowerCase();
+                return dir === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
+            });
+            
+            const tbody = document.getElementById('studentTableBody');
+            const table = document.getElementById('studentTable');
+            const empty = document.getElementById('emptyState');
+            
+            if (filtered.length === 0) {
+                table.style.display = 'none';
+                empty.style.display = 'block';
+            } else {
+                table.style.display = 'table';
+                empty.style.display = 'none';
+                
+                tbody.innerHTML = filtered.map(s => {
+                    const idx = students.findIndex(st => st.neptun === s.neptun);
+                    return `
+                        <tr>
+                            <td>${s.nev}</td>
+                            <td>${s.evfolyam}</td>
+                            <td>${s.szak}</td>
+                            <td>${s.email}</td>
+                            <td><strong>${s.neptun.toUpperCase()}</strong></td>
+                            <td class="actions">
+                                <button class="btn btn-warning btn-sm" onclick="editStudent(${idx})">Módosít</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteStudent(${idx})">Törlés</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+        
+        // Form submit
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const editIdx = document.getElementById('editIndex').value;
+            const student = {
+                nev: document.getElementById('nev').value.trim(),
+                evfolyam: parseInt(document.getElementById('evfolyam').value),
+                szak: document.getElementById('szak').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                neptun: document.getElementById('neptun').value.trim().toUpperCase()
+            };
+            
+            const students = getStudents();
+            
+            if (editIdx !== '') {
+                students[parseInt(editIdx)] = student;
+                showMessage('Hallgató módosítva!');
+                resetForm();
+            } else {
+                if (students.some(s => s.neptun === student.neptun)) {
+                    showMessage('Ez a NEPTUN kód már létezik!', 'error');
+                    return;
+                }
+                students.push(student);
+                showMessage('Hallgató hozzáadva!');
+            }
+            
+            saveStudents(students);
+            renderTable();
+            this.reset();
+            document.getElementById('editIndex').value = '';
+        });
+        
+        // Edit student
+        function editStudent(idx) {
+            const s = getStudents()[idx];
+            document.getElementById('nev').value = s.nev;
+            document.getElementById('evfolyam').value = s.evfolyam;
+            document.getElementById('szak').value = s.szak;
+            document.getElementById('email').value = s.email;
+            document.getElementById('neptun').value = s.neptun;
+            document.getElementById('editIndex').value = idx;
+            document.getElementById('formTitle').textContent = 'Hallgató módosítása';
+            document.getElementById('submitBtn').textContent = 'Mentés';
+        }
+        
+        // Reset form
+        function resetForm() {
+            document.getElementById('studentForm').reset();
+            document.getElementById('editIndex').value = '';
+            document.getElementById('formTitle').textContent = 'Új hallgató hozzáadása';
+            document.getElementById('submitBtn').textContent = 'Hozzáadás';
+        }
+        
+        // Delete student
+        function deleteStudent(idx) {
+            if (confirm('Biztosan törölni szeretnéd?')) {
+                const students = getStudents();
+                students.splice(idx, 1);
+                saveStudents(students);
+                renderTable();
+                showMessage('Hallgató törölve!');
+                if (document.getElementById('editIndex').value == idx) resetForm();
+            }
+        }
+        
+        // Search & sort events
+        document.getElementById('search').addEventListener('input', renderTable);
+        document.getElementById('sort').addEventListener('change', renderTable);
+        
+        // Tab switch
+        function switchTab(view, el) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            renderTable();
+        }
+        
+        // Export JSON
+        function exportJSON() {
+            const students = getStudents();
+            if (students.length === 0) {
+                showMessage('Nincs exportálható adat!', 'error');
+                return;
+            }
+            const blob = new Blob([JSON.stringify(students, null, 2)], {type: 'application/json'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'PHRO7R_hallgatok.json';
+            a.click();
+            showMessage('JSON exportálva!');
+        }
+        
+        // Import JSON
+        function importJSON(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    const data = JSON.parse(ev.target.result);
+                    if (!Array.isArray(data)) throw new Error();
+                    
+                    const existing = getStudents();
+                    const existingNeptuns = new Set(existing.map(s => s.neptun.toUpperCase()));
+                    const newOnes = data.filter(s => !existingNeptuns.has(s.neptun.toUpperCase()));
+                    
+                    saveStudents([...existing, ...newOnes]);
+                    renderTable();
+                    showMessage(`${newOnes.length} új hallgató importálva!`);
+                } catch {
+                    showMessage('Hibás JSON formátum!', 'error');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+        
+        // Init
+        renderTable();
+    </script>
+</body>
+</html>
