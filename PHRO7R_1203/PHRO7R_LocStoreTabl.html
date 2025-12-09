@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHRO7R Órarend JSON - Táblázat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #34495e;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        td {
+            font-size: 0.9rem;
+        }
+        
+        /* Colored cells */
+        .nap {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        
+        .oktato {
+            color: #2980b9;
+        }
+        
+        .szak {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+        
+        .message {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHRO7R Órarend JSON</h1>
+        
+        <div class="card">
+            <div id="message" class="message"></div>
+            
+            <div class="controls">
+                <input type="file" id="fileInput" accept=".json">
+                <button class="btn" onclick="loadFromLocalStorage()">LocalStorage betöltése</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="search">Keresés tárgy szerint:</label>
+                <input type="text" id="search" placeholder="pl. WEB">
+            </div>
+        </div>
+        
+        <div class="card">
+            <table id="oraTable">
+                <thead>
+                    <tr>
+                        <th>Tárgy</th>
+                        <th>Nap</th>
+                        <th>Tól</th>
+                        <th>Ig</th>
+                        <th>Helyszín</th>
+                        <th>Oktató</th>
+                        <th>Szak</th>
+                    </tr>
+                </thead>
+                <tbody id="oraTableBody"></tbody>
+            </table>
+            <div id="emptyState" class="empty-state">
+                Nincs betöltött órarend. Tölts be egy JSON fájlt!
+            </div>
+        </div>
+        
+        <div class="footer">
+            Készítette: Nyakó Sándor | NEPTUN: PHRO7R | © 2025
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'PHRO7R_orarend';
+        let orarendData = [];
+        
+        // Show message
+        function showMessage(text, type = 'success') {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type} show`;
+            setTimeout(() => msg.classList.remove('show'), 3000);
+        }
+        
+        // Parse JSON data (handle different structures)
+        function parseOrarend(data) {
+            // Handle nested structure: { PHRO7R_orarend: { ora: [...] } }
+            if (data.PHRO7R_orarend && data.PHRO7R_orarend.ora) {
+                return data.PHRO7R_orarend.ora;
+            }
+            // Handle array directly
+            if (Array.isArray(data)) {
+                return data;
+            }
+            // Handle { ora: [...] }
+            if (data.ora && Array.isArray(data.ora)) {
+                return data.ora;
+            }
+            return [];
+        }
+        
+        // Render table
+        function renderTable() {
+            const search = document.getElementById('search').value.toLowerCase();
+            const tbody = document.getElementById('oraTableBody');
+            const table = document.getElementById('oraTable');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Filter by tárgy
+            let filtered = orarendData.filter(ora => {
+                if (!search) return true;
+                return ora.targy.toLowerCase().includes(search);
+            });
+            
+            if (filtered.length === 0) {
+                table.style.display = 'none';
+                emptyState.style.display = 'block';
+                if (orarendData.length > 0 && search) {
+                    emptyState.textContent = 'Nincs találat a keresésre.';
+                } else if (orarendData.length === 0) {
+                    emptyState.textContent = 'Nincs betöltött órarend. Tölts be egy JSON fájlt!';
+                }
+            } else {
+                table.style.display = 'table';
+                emptyState.style.display = 'none';
+                tbody.innerHTML = filtered.map(ora => {
+                    const tol = ora.idopont?.tol || ora.tol || '';
+                    const ig = ora.idopont?.ig || ora.ig || '';
+                    const nap = ora.idopont?.nap || ora.nap || '';
+                    
+                    return `
+                        <tr>
+                            <td>${ora.targy}</td>
+                            <td class="nap">${nap}</td>
+                            <td>${tol}</td>
+                            <td>${ig}</td>
+                            <td>${ora.helyszin}</td>
+                            <td class="oktato">${ora.oktato}</td>
+                            <td class="szak">${ora.szak}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+        
+        // Load from file
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    const data = JSON.parse(ev.target.result);
+                    orarendData = parseOrarend(data);
+                    
+                    // Save to LocalStorage
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(orarendData));
+                    
+                    renderTable();
+                    showMessage(`${orarendData.length} óra betöltve és mentve LocalStorage-ba!`);
+                } catch {
+                    showMessage('Hibás JSON formátum!', 'error');
+                }
+            };
+            reader.readAsText(file);
+        });
+        
+        // Load from LocalStorage
+        function loadFromLocalStorage() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            if (data) {
+                orarendData = JSON.parse(data);
+                renderTable();
+                showMessage(`${orarendData.length} óra betöltve LocalStorage-ból!`);
+            } else {
+                showMessage('Nincs mentett adat a LocalStorage-ban!', 'error');
+            }
+        }
+        
+        // Search event
+        document.getElementById('search').addEventListener('input', renderTable);
+        
+        // Init - try to load from LocalStorage
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+            orarendData = JSON.parse(savedData);
+            renderTable();
+        }
+    </script>
+</body>
+</html>
+

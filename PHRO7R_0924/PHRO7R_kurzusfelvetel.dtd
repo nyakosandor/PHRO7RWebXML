@@ -17,7 +17,7 @@
 <!ELEMENT kod (#PCDATA)>
 <!ELEMENT kredit (#PCDATA)>
 <!ELEMENT tipus (kollokvium|szigorlat|aláírás)>
-<!ELEMENT kovetelmeny (Kollokvium|Szigorlat|Aláírás\ megszerzése)>
+<!ELEMENT kovetelmeny (Kollokvium|Szigorlat|Aláírás)>
 <!ELEMENT allapot (#PCDATA)>
 
 <!ELEMENT idopont (nap, tol, ig)>

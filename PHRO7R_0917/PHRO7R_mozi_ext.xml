@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mozi SYSTEM "../PHRO7R_mozi.dtd">
+<!DOCTYPE mozi SYSTEM "../PHRO7R_0924/PHRO7R_mozi.dtd">
 <mozi>
     <film id="txn_nxm_2jb" mufaj="horror">
         <rendezo id="nzk_4xm_2jb" nev="alex" />
@@ -16,6 +16,7 @@
             <vezetorendezo />
             <segedrendezo />
         </rendezo>
+        <szinesz id="szin_2jb" nev="Kiss Anna" />
         <iro id="iro_2jb">
             <foiro />
             <tarsiro />

@@ -39,10 +39,10 @@
             <vezetorendezo />
             <segedrendezo />
         </rendezo>
+        <szinesz id="szin_drama" nev="Nagy Péter" />
         <iro id="iro_2jb">
             <foiro />
             <tarsiro />
         </iro>
     </film>
 </mozi>
-

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE kurzusfelvetel SYSTEM "PHRO7R_kurzusfelvetel.dtd">
-<kurzusfelvetel>
+<kurzusfelvetel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="PHRO7R_kurzusfelvetel.xsd">
     <hallgato>
         <nev>Nyakó Sándor</nev>
         <neptun>PHRO7R</neptun>
@@ -136,5 +136,3 @@
         </targy>
     </targyak>
 </kurzusfelvetel>
-
-
