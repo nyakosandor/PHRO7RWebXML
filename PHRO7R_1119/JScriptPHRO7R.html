@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHRO7R Órarend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #output {
+            margin-top: 20px;
+        }
+        .ora {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .ora h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .field {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PHRO7R Órarend</h1>
+    <button onclick="loadJSON()">Órarend betöltése</button>
+    <div id="output"></div>
+
+    <script>
+        function loadJSON() {
+            fetch('orarendPHRO7R.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Nem sikerült betölteni a JSON fájlt');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayData(data);
+                })
+                .catch(error => {
+                    document.getElementById('output').innerHTML = 
+                        '<p style="color: red;">Hiba: ' + error.message + '</p>';
+                });
+        }
+
+        function displayData(data) {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h2>PHRO7R Órarend 2025</h2>';
+
+            if (data.PHRO7R_orarend && data.PHRO7R_orarend.ora) {
+                const orak = data.PHRO7R_orarend.ora;
+
+                orak.forEach((ora, index) => {
+                    const oraDiv = document.createElement('div');
+                    oraDiv.className = 'ora';
+                    
+                    let html = '<h3>Óra ' + (index + 1) + '</h3>';
+                    
+                    if (ora.targy) {
+                        html += '<div class="field"><strong>Tárgy:</strong> ' + ora.targy + '</div>';
+                    }
+                    
+                    if (ora.idopont) {
+                        const idopont = ora.idopont;
+                        let idopontStr = '';
+                        if (idopont.nap) idopontStr += idopont.nap;
+                        if (idopont.tol && idopont.ig) {
+                            idopontStr += ' ' + idopont.tol + '-' + idopont.ig;
+                        }
+                        if (idopontStr) {
+                            html += '<div class="field"><strong>Időpont:</strong> ' + idopontStr + '</div>';
+                        }
+                    }
+                    
+                    if (ora.helyszin) {
+                        html += '<div class="field"><strong>Helyszín:</strong> ' + ora.helyszin + '</div>';
+                    }
+                    
+                    if (ora.oktato) {
+                        html += '<div class="field"><strong>Oktató:</strong> ' + ora.oktato + '</div>';
+                    }
+                    
+                    if (ora.szak) {
+                        html += '<div class="field"><strong>Szak:</strong> ' + ora.szak + '</div>';
+                    }
+                    
+                    if (ora.tipus) {
+                        html += '<div class="field"><strong>Típus:</strong> ' + ora.tipus + '</div>';
+                    }
+                    
+                    oraDiv.innerHTML = html;
+                    output.appendChild(oraDiv);
+                });
+            } else {
+                output.innerHTML += '<p>Nincs megjeleníthető órarend adat.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
+
