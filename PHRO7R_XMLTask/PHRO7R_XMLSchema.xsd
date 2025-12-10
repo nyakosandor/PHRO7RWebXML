@@ -494,6 +494,15 @@
             <xs:field xpath="@d_rb"/>
         </xs:keyref>
 
+        <!-- Raktár-Dolgozó egyedi kapcsolat -->
+        <xs:unique name="RaktarDolgozoUnique">
+            <xs:annotation>
+                <xs:documentation>Biztosítja, hogy minden dolgozó csak egy raktárhoz lehet hozzárendelve</xs:documentation>
+            </xs:annotation>
+            <xs:selector xpath="Raktar"/>
+            <xs:field xpath="@d_rb"/>
+        </xs:unique>
+
         <!-- RaktarTermek -> Raktár idegen kulcs hivatkozás -->
         <xs:keyref name="RaktarTermekRaktarRef" refer="RaktarKey">
             <xs:annotation>
